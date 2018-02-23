@@ -34,15 +34,27 @@ test("getIn", () => {
 });
 
 test("assoc", () => {
-  expect(assoc({}, "a", 1)).toEqual({ a: 1 });
-  expect(assoc({}, "a", 1, "b", 2)).toEqual({ a: 1, b: 2 });
+  const in1 = {};
+  const in2 = [];
 
-  expect(assoc([], 0, 1)).toEqual([1]);
-  expect(assoc([], 1, 1, 3, 2)).toEqual([, 1, , 2]);
+  expect(assoc(in1, "a", 1)).toEqual({ a: 1 });
+  expect(assoc(in1, "a", 1, "b", 2)).toEqual({ a: 1, b: 2 });
+
+  expect(in1).toEqual({});
+
+  expect(assoc(in2, 0, 1)).toEqual([1]);
+  expect(assoc(in2, 1, 1, 3, 2)).toEqual([, 1, , 2]);
+
+  expect(in2).toEqual([]);
 });
 
 test("assocIn", () => {
-  expect(assocIn({ a: {} }, ["a", "b"], 1)).toEqual({ a: { b: 1 } });
+  const in1 = { a: {} };
+  const in2 = [{ a: [] }];
+
+  expect(assocIn(in1, ["a", "b"], 1)).toEqual({ a: { b: 1 } });
+  expect(in1).toEqual({ a: {} });
+
   expect(assocIn({}, ["a", "b"], 1)).toEqual({ a: { b: 1 } });
   expect(assocIn({ a: 1 }, ["a", "b"], 1)).toEqual({ a: 1 });
 
@@ -51,20 +63,27 @@ test("assocIn", () => {
   expect(assocIn([1, []], [0, 1], 1)).toEqual([1, []]);
 
   expect(assocIn({ a: [] }, ["a", 0], 1)).toEqual({ a: [1] });
-  expect(assocIn([{ a: [] }], [0, "a", 1], 1)).toEqual([{ a: [, 1] }]);
+  expect(assocIn(in2, [0, "a", 1], 1)).toEqual([{ a: [, 1] }]);
+  expect(in2).toEqual([{ a: [] }]);
 });
 
 test("dissoc", () => {
-  expect(dissoc({ a: 1, b: 2, c: 3 }, "a", "b", "d")).toEqual({ c: 3 });
+  const in1 = { a: 1, b: 2, c: 3 };
+  expect(dissoc(in1, "a", "b", "d")).toEqual({ c: 3 });
+  expect(in1).toEqual({ a: 1, b: 2, c: 3 });
 });
 
 test("conj", () => {
-  expect(conj([], 1, 2)).toEqual([1, 2]);
+  const in1 = [];
+  expect(conj(in1, 1, 2)).toEqual([1, 2]);
+  expect(in1).toEqual([]);
   expect(conj({}, ["a", 1], ["b", 2])).toEqual({ a: 1, b: 2 });
 });
 
 test("update", () => {
-  expect(update({ a: 1 }, "a", (n, x) => n + x + 1, 10)).toEqual({ a: 12 });
+  const in1 = { a: 1 };
+  expect(update(in1, "a", (n, x) => n + x + 1, 10)).toEqual({ a: 12 });
+  expect(in1).toEqual({ a: 1 });
   expect(update({ a: 1 }, "b", (n, x) => n + x + 1, 10)).toEqual({
     a: 1,
     b: NaN
@@ -75,9 +94,11 @@ test("update", () => {
 });
 
 test("updateIn", () => {
-  expect(updateIn({ a: { b: 1 } }, ["a", "b"], n => n + 1)).toEqual({
+  const in1 = { a: { b: 1 } };
+  expect(updateIn(in1, ["a", "b"], n => n + 1)).toEqual({
     a: { b: 2 }
   });
+  expect(in1).toEqual({ a: { b: 1 } });
   expect(updateIn({ a: { b: 1 } }, ["a", "c"], n => n + 1)).toEqual({
     a: { b: 1, c: NaN }
   });
