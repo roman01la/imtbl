@@ -1,6 +1,8 @@
 const isObject = v =>
   v !== null && typeof v === "object" && Array.isArray(v) === false;
 
+const isNil = v => v === undefined || v === null;
+
 export const assoc = (coll, ...kvs) => {
   let ret = coll;
 
@@ -66,7 +68,7 @@ export const conj = (coll, ...xs) => {
   return ret;
 };
 
-export const get = (m, k, notFound) => (m[k] !== undefined ? m[k] : notFound);
+export const get = (m, k, notFound) => (isNil(m[k]) ? notFound : m[k]);
 
 export const getIn = (m, ks, notFound) => {
   let ret = m;
