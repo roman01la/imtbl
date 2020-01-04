@@ -51,6 +51,7 @@ test("assoc", () => {
 test("assocIn", () => {
   const in1 = { a: {} };
   const in2 = [{ a: [] }];
+  const in3 = { a: null };
 
   expect(assocIn(in1, ["a", "b"], 1)).toEqual({ a: { b: 1 } });
   expect(in1).toEqual({ a: {} });
@@ -65,6 +66,9 @@ test("assocIn", () => {
   expect(assocIn({ a: [] }, ["a", 0], 1)).toEqual({ a: [1] });
   expect(assocIn(in2, [0, "a", 1], 1)).toEqual([{ a: [, 1] }]);
   expect(in2).toEqual([{ a: [] }]);
+
+  expect(assocIn(in3, ['a', 'b'], 1)).toEqual({ a: { b: 1 } });
+  expect(in3).toEqual({ a: null });
 });
 
 test("dissoc", () => {
