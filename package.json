@@ -1,6 +1,6 @@
 {
   "name": "imtbl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Immutable operations for JavaScript data structures",
   "main": "src/index.js",
   "scripts": {
