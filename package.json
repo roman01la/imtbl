@@ -11,7 +11,7 @@
   "author": "Roman Liutikov",
   "license": "MIT",
   "devDependencies": {
-    "jest": "^22.4.0",
+    "jest": "^29.3.1",
     "rollup": "^0.56.2"
   },
   "engines": {
